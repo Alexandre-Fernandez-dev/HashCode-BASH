@@ -74,6 +74,7 @@ public class GetData {
 	for (Integer i: caches.keySet())
 	    cacheList.add(caches.get(i));
 	env.caches = new ArrayList<Cache>(cacheList);
+	env.videos = new ArrayList<Video>(videos);
 	
     }
 }
