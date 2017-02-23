@@ -11,11 +11,11 @@ public class HC_Boris_2 {
 	public static void main(String[] args) {
 		
 		Environnement env = new Environnement();
-		//GetData.getData(env, "inputs/me_at_the_zoo.in");
+		GetData.getData(env, "inputs/me_at_the_zoo.in");
 		
 		/*** Donnees de tests ***/
 		
-		int taille_cache = 1500;
+		/*int taille_cache = 1500;
 		int taille_video = 10;
 		
 		ArrayList<Cache> list_caches = new ArrayList<Cache>();

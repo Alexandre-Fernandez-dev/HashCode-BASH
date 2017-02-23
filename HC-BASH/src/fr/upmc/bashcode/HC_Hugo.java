@@ -51,8 +51,20 @@ public class HC_Hugo {
 			}
 			
 		}
+		ArrayList<Cache> list_caches=new ArrayList<Cache>();
+		for (Cache c:env.caches){
+			if (!c.getInCacheVideos().isEmpty())
+				list_caches.add(c);
+		}
 		
-		
+		System.out.println(list_caches.size());
+		for(Cache c : list_caches){
+			System.out.print(env.caches.indexOf(c) + " ");
+			for(Video v : c.getInCacheVideos()){
+				System.out.print(env.videos.indexOf(v) + " ");
+			}
+			System.out.print("\n");
+		}
 	}
 	
 }
