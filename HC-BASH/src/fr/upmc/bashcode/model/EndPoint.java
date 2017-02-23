@@ -15,4 +15,12 @@ public class EndPoint {
     public void addEndCache(Cache c, int latency) {
         cachesLatency.put(c, latency); 
     }
+    
+    public HashMap<Video,Integer> getVideoRequest(){
+    	return this.videoRequest;
+    }
+    
+    public HashMap<Cache,Integer> getCachesLatency(){
+    	return this.cachesLatency;
+    }
 }
