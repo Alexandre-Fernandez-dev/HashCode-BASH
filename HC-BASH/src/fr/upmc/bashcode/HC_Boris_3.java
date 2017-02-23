@@ -3,17 +3,22 @@ package fr.upmc.bashcode;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import fr.upmc.bashcode.model.*;
+import fr.upmc.bashcode.model.Cache;
+import fr.upmc.bashcode.model.EndPoint;
+import fr.upmc.bashcode.model.Environnement;
+import fr.upmc.bashcode.model.Video;
 
-public class HC_Hugo {
+public class HC_Boris_3 {
 
 	public static void main(String[] args) {
 		
 		Environnement env = new Environnement();
 		GetData.getData(env, "inputs/me_at_the_zoo.in");
 		
-	
-	
+		int factor_req_latency = 1;
+		int factor_taille_vid = 1;
+		int factor_datacenter_latency = 1;
+		
 		for (Cache c:env.caches){
 			HashMap<Video,Float> score=new HashMap<Video,Float>();
 			
@@ -23,10 +28,9 @@ public class HC_Hugo {
 						score.put(v, (float)0);
 					}
 					score.put(v, score.get(v)
-							+(e.getVideoRequest().get(v)
-									/(c.getEndPointsLatency().get(e)
-											*v.getSize())
-											*e.getLatency()));
+							+factor_req_latency * (e.getVideoRequest().get(v)/(c.getEndPointsLatency().get(e)))
+							+ (factor_taille_vid * 1/v.getSize())
+							+ (factor_datacenter_latency * e.getLatency()));
 				}
 			}
 			while(c.getCurrent()<c.getSizeMax()){
@@ -65,6 +69,7 @@ public class HC_Hugo {
 			}
 			System.out.print("\n");
 		}
+		
 	}
-	
 }
+
