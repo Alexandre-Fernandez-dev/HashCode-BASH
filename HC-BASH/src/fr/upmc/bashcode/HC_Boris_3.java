@@ -13,11 +13,11 @@ public class HC_Boris_3 {
 	public static void main(String[] args) {
 		
 		Environnement env = new Environnement();
-		GetData.getData(env, "inputs/me_at_the_zoo.in");
+		GetData.getData(env, "inputs/kittens.in");
 		
-		int factor_req_latency = 1;
-		int factor_taille_vid = 1;
-		int factor_datacenter_latency = 1;
+		float factor_req_latency = (float) 10;
+		float factor_taille_vid = (float) 30000;
+		float factor_datacenter_latency = (float) 0.05;
 		
 		for (Cache c:env.caches){
 			HashMap<Video,Float> score=new HashMap<Video,Float>();
@@ -27,8 +27,13 @@ public class HC_Boris_3 {
 					if (!score.containsKey(v)){
 						score.put(v, (float)0);
 					}
+					System.out.println(factor_req_latency * (e.getVideoRequest().get(v)/(c.getEndPointsLatency().get(e))));
+					System.out.println((factor_taille_vid * 1/v.getSize()));
+					System.out.println((factor_datacenter_latency * e.getLatency()));
+					System.out.println("////////////////");
+					
 					score.put(v, score.get(v)
-							+factor_req_latency * (e.getVideoRequest().get(v)/(c.getEndPointsLatency().get(e)))
+							+ factor_req_latency * (e.getVideoRequest().get(v)/(c.getEndPointsLatency().get(e)))
 							+ (factor_taille_vid * 1/v.getSize())
 							+ (factor_datacenter_latency * e.getLatency()));
 				}
