@@ -23,4 +23,8 @@ public class EndPoint {
     public HashMap<Cache,Integer> getCachesLatency(){
     	return this.cachesLatency;
     }
+    
+    public int getLatency(){
+    	return this.dataCenterLatency;
+    }
 }
