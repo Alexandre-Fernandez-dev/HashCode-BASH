@@ -1,5 +1,8 @@
 package fr.upmc.bashcode;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,14 +13,14 @@ import fr.upmc.bashcode.model.Video;
 
 public class HC_Boris_3 {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
 		Environnement env = new Environnement();
 		GetData.getData(env, "inputs/kittens.in");
 		
 		float factor_req_latency = (float) 10;
-		float factor_taille_vid = (float) 30000;
-		float factor_datacenter_latency = (float) 0.05;
+		float factor_taille_vid = (float) 80000;
+		float factor_datacenter_latency = (float) 0.1;
 		
 		for (Cache c:env.caches){
 			HashMap<Video,Float> score=new HashMap<Video,Float>();
@@ -27,10 +30,10 @@ public class HC_Boris_3 {
 					if (!score.containsKey(v)){
 						score.put(v, (float)0);
 					}
-					System.out.println(factor_req_latency * (e.getVideoRequest().get(v)/(c.getEndPointsLatency().get(e))));
+					/*System.out.println(factor_req_latency * (e.getVideoRequest().get(v)/(c.getEndPointsLatency().get(e))));
 					System.out.println((factor_taille_vid * 1/v.getSize()));
 					System.out.println((factor_datacenter_latency * e.getLatency()));
-					System.out.println("////////////////");
+					System.out.println("////////////////");*/
 					
 					score.put(v, score.get(v)
 							+ factor_req_latency * (e.getVideoRequest().get(v)/(c.getEndPointsLatency().get(e)))
@@ -61,7 +64,7 @@ public class HC_Boris_3 {
 			
 		}
 		ArrayList<Cache> list_caches=new ArrayList<Cache>();
-		for (Cache c:env.caches){
+		/*for (Cache c:env.caches){
 			if (!c.getInCacheVideos().isEmpty())
 				list_caches.add(c);
 		}
@@ -73,7 +76,26 @@ public class HC_Boris_3 {
 				System.out.print(env.videos.indexOf(v) + " ");
 			}
 			System.out.print("\n");
+		}*/
+		
+		File f = new File("kittensBoris.txt");
+		FileWriter fw = new FileWriter(f);
+		
+		
+		for (Cache c:env.caches){
+			if (!c.getInCacheVideos().isEmpty())
+				list_caches.add(c);
 		}
+
+		fw.write(list_caches.size()+ "\n");
+		for(Cache c : list_caches){
+			fw.write(env.caches.indexOf(c) + " ");
+			for(Video v : c.getInCacheVideos()){
+				fw.write(env.videos.indexOf(v) + " ");
+			}
+			fw.write("\n");
+		}
+		fw.close();
 		
 	}
 }
